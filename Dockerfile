@@ -24,5 +24,6 @@ RUN ideascube collectstatic
 RUN ideascube migrate --run-syncdb
 
 COPY start_nginx_ideascube.sh /
+EXPOSE 80
 
 ENTRYPOINT ./start_nginx_ideascube.sh
