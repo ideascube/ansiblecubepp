@@ -12,6 +12,3 @@
   template:
     src: ideascube.vhost.j2
     dest: /etc/nginx/sites-enabled/ideascube
-    
-- name: debougue
-  debug: msg={{ ansible_local.device_list[generic_project_name] }}
