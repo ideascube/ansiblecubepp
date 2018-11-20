@@ -8,6 +8,15 @@
 - name: reload ansible_local
   setup: filter=ansible_local
 
+- name: Copy hosts entries
+  copy:
+    src: hosts
+    dest: /tmp/hosts
+    mode: 0644
+
+- name: Spoof DNS entries
+  shell: cat /tmp/hosts >> /etc/hosts
+
 - name: set nginx vhost
   template:
     src: ideascube.vhost.j2
