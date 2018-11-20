@@ -3,6 +3,9 @@
   shell: ideascube catalog remotes add "{{ item.id }}" "{{ item.name }}" "{{ item.url }}"
   with_items: "{{ catalogs }}"
 
+- name: update ideascube cache
+  shell: ideascube catalog cache update
+
 - name: install packages
   shell: "{% if 'present' in item.status %}ideascube catalog install {{ item.name }}
     {% elif 'latest' in item.status %}ideascube catalog update {{ item.name }}
