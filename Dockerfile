@@ -7,11 +7,11 @@ RUN apt-add-repository 'deb http://repos.ideascube.org/debian/ jessie/'
 
 RUN apt-get update -y && \
     apt-get upgrade -y && \
-    apt-get install python3-pip libssl-dev libffi-dev software-properties-common -y && \
+    apt-get install python-pip python-dev libssl-dev libffi-dev software-properties-common git -y && \
     apt-get install ideascube -y --force-yes
 
-RUN pip3 install --upgrade setuptools
-RUN pip3 install ansible==2.5.0
+RUN pip install --upgrade setuptools
+RUN pip install ansible==2.5.0
 RUN mkdir -p /etc/ansible/facts.d
 
 ENV IDEASCUBE_ID=kb
@@ -25,5 +25,6 @@ RUN ideascube migrate --run-syncdb
 
 COPY start_nginx_ideascube.sh /
 
+COPY hosts /tmp/
 
 ENTRYPOINT ./start_nginx_ideascube.sh
