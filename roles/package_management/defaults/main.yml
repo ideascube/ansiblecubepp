@@ -1,0 +1,11 @@
+---
+catalogs:
+  - id: "Kiwix"
+    name: "Kiwix ZIM content"
+    url: "https://raw.githubusercontent.com/ideascube/catalog-i-o/master/kiwix.yml"
+  - id: "Omeka"
+    name: "Omeka packages"
+    url: "https://raw.githubusercontent.com/ideascube/catalog-i-o/master/omeka.yml"
+  - id: "StaticSites"
+    name: "Static sites"
+    url: "https://raw.githubusercontent.com/ideascube/catalog-i-o/master/static-sites.yml"

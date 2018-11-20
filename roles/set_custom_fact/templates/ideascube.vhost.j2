@@ -1,0 +1,41 @@
+server {
+    # the port your site will be served on
+    listen      80;
+    listen   [::]:80;
+    listen      443 ssl;
+    listen   [::]:443 ssl;
+    # the domain name it will serve for
+
+server_name {{ generic_project_name }};
+    charset     utf-8;
+
+    # Django media
+    location /media/  {
+        alias /var/ideascube/main/media/;
+        expires 1y;
+    }
+
+    location /static/ {
+        alias /var/ideascube/static/;
+        expires 1y;
+    }
+
+    # Finally, send all non-media requests to the Django server.
+    location / {
+	proxy_pass http://127.0.0.1:8000;
+    }
+}
+
+# serve the static sites
+server {
+    listen 80;
+    listen [::]:80;
+    listen 443 ssl;
+    listen [::]:443 ssl;
+
+server_name sites.{{ generic_project_name }};
+
+    charset utf-8;
+
+    root /var/ideascube/nginx/;
+}

@@ -1,0 +1,29 @@
+---
+- name: Get device_list
+  get_url:
+    url: https://raw.githubusercontent.com/ideascube/ansiblecube/oneUpdateFile/roles/set_custom_fact/files/device_list.fact
+    dest: /etc/ansible/facts.d/device_list.fact
+    mode: 0644
+
+- name: copy ansible host file
+  copy:
+    src: hosts
+    dest: /etc/ansible/hosts
+    mode: 0644
+
+- name: reload ansible_local
+  setup: filter=ansible_local
+
+- name: Spoof DNS entries
+  lineinfile:
+    path: /etc/hosts
+    line: "{{ item }}"
+  with_items: "{{ dns_spoof }}"
+
+- name: set nginx vhost
+  template:
+    src: ideascube.vhost.j2
+    dest: /etc/nginx/sites-enabled/ideascube
+    
+- name: debougue
+  debug: msg={{ ansible_local.device_list[generic_project_name] }}
