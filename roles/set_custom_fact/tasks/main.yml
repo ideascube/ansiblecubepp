@@ -5,12 +5,6 @@
     dest: /etc/ansible/facts.d/device_list.fact
     mode: 0644
 
-- name: copy ansible host file
-  copy:
-    src: hosts
-    dest: /etc/ansible/hosts
-    mode: 0644
-
 - name: reload ansible_local
   setup: filter=ansible_local
 
