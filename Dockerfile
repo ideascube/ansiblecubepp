@@ -25,6 +25,4 @@ RUN ideascube migrate --run-syncdb
 
 COPY start_nginx_ideascube.sh /
 
-COPY hosts /tmp/
-
 ENTRYPOINT ./start_nginx_ideascube.sh
