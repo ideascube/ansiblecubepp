@@ -14,5 +14,6 @@
     dest: /etc/nginx/sites-enabled/ideascube
 
 - name: start nginx
-  service: nginx
-  state: started
+  service: 
+    name: nginx
+    state: started
