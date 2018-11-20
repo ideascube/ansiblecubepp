@@ -12,3 +12,7 @@
   template:
     src: ideascube.vhost.j2
     dest: /etc/nginx/sites-enabled/ideascube
+
+- name: start nginx
+  service: nginx
+  state: started
