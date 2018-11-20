@@ -1,6 +1,6 @@
 ---
 - name: install catalogs
-  shell: "ideascube catalog remotes add {{ item.id }} {{ item.name }} {{ item.url }}"
+  shell: ideascube catalog remotes add "{{ item.id }}" "{{ item.name }}" "{{ item.url }}"
   with_items: "{{ catalogs }}"
 
 - name: install packages

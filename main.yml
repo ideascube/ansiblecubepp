@@ -1,7 +1,7 @@
 ---
 - hosts: localhost
   roles:
-#    - set_custom_fact
+    - set_custom_fact
 #    - kiwix
 #    - kolibri
     - package_management

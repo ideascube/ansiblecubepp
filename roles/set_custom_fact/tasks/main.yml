@@ -14,12 +14,6 @@
 - name: reload ansible_local
   setup: filter=ansible_local
 
-- name: Spoof DNS entries
-  lineinfile:
-    path: /etc/hosts
-    line: "{{ item }}"
-  with_items: "{{ dns_spoof }}"
-
 - name: set nginx vhost
   template:
     src: ideascube.vhost.j2
