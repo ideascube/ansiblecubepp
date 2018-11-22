@@ -6,11 +6,38 @@
 - name: update ideascube cache
   shell: ideascube catalog cache update
 
-- name: install packages
+- name: Download and make a local copy of each catalog
+  get_url:
+    url: "{{ item.url }}"
+    dest: "/tmp/{{ item.id }}.yaml"
+    mode: 0644
+  with_items: "{{ catalogs }}"
+
+- name: Load all catalogs as ansible vars
+  include_vars:
+    file: "/tmp/{{ item.id }}.yaml"
+    name: "{{ item.id }}"
+  with_items: "{{ catalogs }}"
+
+- name: install non-Kiwix packages
   shell: "{% if 'present' in item.status %}ideascube catalog install {{ item.name }}
     {% elif 'latest' in item.status %}ideascube catalog update {{ item.name }}
     {% elif 'absent' in item.status %}ideascube catalog remove {{ item.name }}
     {% elif 'reinstall' in item.status %}ideascube catalog reinstall {{ item.name }}
     {% else %}echo '[+] nothing to do'{% endif %}"
+  when: "{{ item.name not in Kiwix.all }}"
   with_items: '{{ ansible_local.device_list[generic_project_name].package_management | default(omit) }}'
-  when: ansible_local.device_list[generic_project_name].package_management is defined
+
+- block:
+    - get_url: url=http://filer.bsf-intranet.org/kiwix-manage-x86_64 dest=/usr/local/bin/kiwix-manage mode=0755
+    - shell: kiwix-manage /var/ideascube/kiwix/library.xml add {{ item.name }}
+      when: "{{ item.name in Kiwix.all }}"
+      with_items: '{{ ansible_local.device_list[generic_project_name].package_management | default(omit) }}'
+#      ignore_errors: true
+    - include_vars: file=/var/ideascube/main/catalog/installed.json name="installed_json"
+    - set_fact:
+        installed_json: "{{ installed_json | combine({ item.name: Kiwix['all'][item.name] }) }}"
+      when: "{{ item.name in Kiwix.all }}"
+      with_items: '{{ ansible_local.device_list[generic_project_name].package_management | default(omit) }}'
+    - debug: msg={{installed_json}}
+    - copy: content="{{ installed_json | to_nice_json }}"  dest=/tmp/final.json
