@@ -9,3 +9,6 @@ catalogs:
   - id: "StaticSites"
     name: "Static sites"
     url: "https://raw.githubusercontent.com/ideascube/catalog-i-o/master/static-sites.yml"
+  - id: "osmaps"
+    name: "OpenStreetMaps"
+    url: "https://raw.githubusercontent.com/ideascube/catalog-i-o/master/osmaps.yml"

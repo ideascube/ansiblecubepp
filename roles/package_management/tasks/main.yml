@@ -28,16 +28,41 @@
   when: "{{ item.name not in Kiwix.all }}"
   with_items: '{{ ansible_local.device_list[generic_project_name].package_management | default(omit) }}'
 
-- block:
-    - get_url: url=http://filer.bsf-intranet.org/kiwix-manage-x86_64 dest=/usr/local/bin/kiwix-manage mode=0755
-    - shell: kiwix-manage /var/ideascube/kiwix/library.xml add {{ item.name }}
+- name: Download Kiwix binary
+  get_url:
+    url: http://filer.bsf-intranet.org/kiwix-manage-x86_64
+    dest: /usr/local/bin/kiwix-manage
+    mode: 0755
+
+#- name: Create a list with kiwix packages
+#  shell: echo "{{ item.name }}"
+#  register: kiwix_l
+#  when: "{{ item.name in Kiwix.all }}"
+#  with_items: '{{ ansible_local.device_list[generic_project_name].package_management}}'
+
+#  set_fact:
+#    kiwix_list: "{% set kiwix_list = [] %}
+#      {% for item in ansible_local.device_list[generic_project_name].package_management %}
+#      {% if item.name in Kiwix.all %}
+#      {{ kiwix_list.append(item.name)}}
+#      {% else %}
+#      {% endif %}
+#      {% endfor %}{{ kiwix_list }}"
+#
+
+- name: Try to link kiwix packages without installing.
+  block:
+    - shell: kiwix-manage /var/ideascube/kiwix/library.xml add /var/ideascube/kiwix/data/content/{{ item.name }}.zim
       when: "{{ item.name in Kiwix.all }}"
-      with_items: '{{ ansible_local.device_list[generic_project_name].package_management | default(omit) }}'
-#      ignore_errors: true
+      with_items: '{{ ansible_local.device_list[generic_project_name].package_management}}'
     - include_vars: file=/var/ideascube/main/catalog/installed.json name="installed_json"
     - set_fact:
         installed_json: "{{ installed_json | combine({ item.name: Kiwix['all'][item.name] }) }}"
       when: "{{ item.name in Kiwix.all }}"
-      with_items: '{{ ansible_local.device_list[generic_project_name].package_management | default(omit) }}'
-    - debug: msg={{installed_json}}
-    - copy: content="{{ installed_json | to_nice_json }}"  dest=/tmp/final.json
+      with_items: '{{ ansible_local.device_list[generic_project_name].package_management}}'
+    - copy: content="{{ installed_json | to_nice_json }}"  dest=/var/ideascube/main/catalog/installed.json
+    - script: update_sqlite.py "{{ item.name }}"
+      when: "{{ item.name in Kiwix.all }}"
+      with_items: '{{ ansible_local.device_list[generic_project_name].package_management}}'
+  rescue:
+    - debug: msg="Failed to install all kiwix packages, probably one is missing from cache server."
