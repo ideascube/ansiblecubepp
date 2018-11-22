@@ -17,10 +17,15 @@
 - name: Spoof DNS entries
   shell: cat /tmp/hosts >> /etc/hosts
 
-- name: set nginx vhost
+- name: set nginx vhost for ideascube
   template:
     src: ideascube.vhost.j2
     dest: /etc/nginx/sites-enabled/ideascube
+
+- name: set nginx vhost for kiwix
+  template:
+    src: kiwix.vhost.j2
+    dest: /etc/nginx/sites-enabled/kiwix
 
 - name: set long domain name in nginx
   lineinfile:
