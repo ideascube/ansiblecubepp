@@ -16,11 +16,6 @@ RUN mkdir -p /etc/ansible/facts.d
 
 ARG PROJECT_NAME=idb-bsf-vagrant
 ENV PROJECT_NAME="${PROJECT_NAME}"
-ENV IDEASCUBE_ID=idb
-ENV DOMAIN="${PROJECT_NAME}.ideas-box.eu"
-
-RUN ideascube collectstatic
-RUN ideascube migrate --run-syncdb
 
 ADD http://filer.bsf-intranet.org/kiwix-serve-AMD64.v2.0 /usr/local/bin/kiwix-serve
 RUN chmod 755 /usr/local/bin/kiwix-serve

@@ -58,3 +58,4 @@
     - script: update_sqlite.py "{{ device_kiwix_pkg |join(' ')}}"
   rescue:
     - debug: msg="Failed to install all kiwix packages, probably one is missing from cache server."
+  notify: Start kiwix serve

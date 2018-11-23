@@ -1,0 +1,3 @@
+---
+- name: Start kiwix serve
+  shell: nohup /usr/local/bin/kiwix-serve --library --port=8002 /var/ideascube/kiwix/library.xml &
