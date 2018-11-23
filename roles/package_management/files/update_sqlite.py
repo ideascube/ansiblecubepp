@@ -26,4 +26,4 @@ def update_sqlite(pkgs):
 
 
 if __name__ == '__main__':
-  update_sqlite(list(sys.argv))
+  update_sqlite(sys.argv)

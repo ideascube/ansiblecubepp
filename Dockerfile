@@ -14,11 +14,10 @@ RUN pip install --upgrade setuptools
 RUN pip install ansible==2.5.0
 RUN mkdir -p /etc/ansible/facts.d
 
-ENV IDEASCUBE_ID=kb
-ENV DOMAIN=koombook.lan
-
 ARG PROJECT_NAME=idb-bsf-vagrant
 ENV PROJECT_NAME="${PROJECT_NAME}"
+ENV IDEASCUBE_ID=idb
+ENV DOMAIN="${PROJECT_NAME}.ideas-box.eu"
 
 RUN ideascube collectstatic
 RUN ideascube migrate --run-syncdb

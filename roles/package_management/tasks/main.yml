@@ -34,35 +34,27 @@
     dest: /usr/local/bin/kiwix-manage
     mode: 0755
 
-#- name: Create a list with kiwix packages
-#  shell: echo "{{ item.name }}"
-#  register: kiwix_l
-#  when: "{{ item.name in Kiwix.all }}"
-#  with_items: '{{ ansible_local.device_list[generic_project_name].package_management}}'
+- name: Gather all Kiwix package names
+  set_fact:
+    kiwix_pkg_list: "{{ Kiwix.all.keys() }}"
 
-#  set_fact:
-#    kiwix_list: "{% set kiwix_list = [] %}
-#      {% for item in ansible_local.device_list[generic_project_name].package_management %}
-#      {% if item.name in Kiwix.all %}
-#      {{ kiwix_list.append(item.name)}}
-#      {% else %}
-#      {% endif %}
-#      {% endfor %}{{ kiwix_list }}"
-#
+- name: Gather all package names for device
+  set_fact:
+    device_pkg_list: "{{ ansible_local.device_list[generic_project_name].package_management | map(attribute='name') |list }}"
+
+- name: Extract list of Kiwix packages to install.
+  set_fact:
+    device_kiwix_pkg: "{{ kiwix_pkg_list | intersect(device_pkg_list) }}"
 
 - name: Try to link kiwix packages without installing.
   block:
     - shell: kiwix-manage /var/ideascube/kiwix/library.xml add /var/ideascube/kiwix/data/content/{{ item.name }}.zim
-      when: "{{ item.name in Kiwix.all }}"
-      with_items: '{{ ansible_local.device_list[generic_project_name].package_management}}'
+      with_items: "{{ device_kiwix_pkg }}"
     - include_vars: file=/var/ideascube/main/catalog/installed.json name="installed_json"
     - set_fact:
         installed_json: "{{ installed_json | combine({ item.name: Kiwix['all'][item.name] }) }}"
-      when: "{{ item.name in Kiwix.all }}"
-      with_items: '{{ ansible_local.device_list[generic_project_name].package_management}}'
+      with_items: "{{ device_kiwix_pkg }}"
     - copy: content="{{ installed_json | to_nice_json }}"  dest=/var/ideascube/main/catalog/installed.json
-    - script: update_sqlite.py "{{ item.name }}"
-      when: "{{ item.name in Kiwix.all }}"
-      with_items: '{{ ansible_local.device_list[generic_project_name].package_management}}'
+    - script: update_sqlite.py "{{ device_kiwix_pkg }}"
   rescue:
     - debug: msg="Failed to install all kiwix packages, probably one is missing from cache server."
