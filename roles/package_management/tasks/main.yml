@@ -50,6 +50,7 @@
   block:
     - shell: kiwix-manage /var/ideascube/kiwix/library.xml add /var/ideascube/kiwix/data/content/{{ item }}.zim
       with_items: "{{ device_kiwix_pkg }}"
+      notify: Start kiwix serve
     - include_vars: file=/var/ideascube/main/catalog/installed.json name="installed_json"
     - set_fact:
         installed_json: "{{ installed_json | combine({ item: Kiwix['all'][item] }) }}"
@@ -58,4 +59,3 @@
     - script: update_sqlite.py "{{ device_kiwix_pkg |join(' ')}}"
   rescue:
     - debug: msg="Failed to install all kiwix packages, probably one is missing from cache server."
-  notify: Start kiwix serve
