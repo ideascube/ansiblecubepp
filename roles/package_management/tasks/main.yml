@@ -55,6 +55,6 @@
         installed_json: "{{ installed_json | combine({ item: Kiwix['all'][item] }) }}"
       with_items: "{{ device_kiwix_pkg }}"
     - copy: content="{{ installed_json | to_nice_json }}"  dest=/var/ideascube/main/catalog/installed.json
-    - script: update_sqlite.py "{{ device_kiwix_pkg }}"
+    - script: update_sqlite.py "{{ device_kiwix_pkg |join(' ')}}"
   rescue:
     - debug: msg="Failed to install all kiwix packages, probably one is missing from cache server."

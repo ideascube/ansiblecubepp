@@ -8,7 +8,7 @@ def update_sqlite(pkgs):
     conn = sqlite3.connect('/var/ideascube/main/default.sqlite')
     c = conn.cursor()
 
-    req = c.execute("select value from configuration_configuration where id=2")
+    req = c.execute("select value from configuration_configuration where namespace='home-page'")
 
     result = req.fetchall()
     try:
@@ -16,14 +16,12 @@ def update_sqlite(pkgs):
     except IndexError:
         new_visible_pkg_list = []
 
-    for pkg in pkgs:
-        new_visible_pkg_list.append(pkg)
-
-    c.execute("UPDATE configuration_configuration set value='{}' where id=2".format(json.dumps(new_visible_pkg_list)))
+    sql = "UPDATE configuration_configuration set value='{}' where namespace='home-page'".format(json.dumps(new_visible_pkg_list + pkgs))
+    c.execute(sql)
 
     conn.commit()
     conn.close()
 
 
 if __name__ == '__main__':
-  update_sqlite(sys.argv)
+  update_sqlite(sys.argv[1:][0].split())
