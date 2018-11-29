@@ -11,8 +11,6 @@
     state: mounted
 
 - name: Import channels and content
-  become: yes
-  become_user: ideascube
   notify: restart kolibri
   shell: >
     {{ kolibri_bin }} manage importchannel disk {{ language[item] }} /media/kolibri/khan/{{ item }}/

@@ -3,21 +3,16 @@
   apt: name={{ item }} state=present
   with_items:
     - cifs-utils
-    - sudo
 
 - name: Create a working dir kolibri
-  become: yes
-  become_user: ideascube
-  file: path=/home/ideascube/.kolibri state=directory
+  file: path=/root/.kolibri state=directory
 
 - name: Install Kolibri in virtualenv
-  become: yes
-  become_user: ideascube
   pip: 
     version={{ ansible_local.device_list[generic_project_name].kolibri.version }}
     name=kolibri
-    chdir=/home/ideascube/.kolibri
-    virtualenv=/home/ideascube/.kolibri/env
+    chdir=/root/.kolibri
+    virtualenv=/root/.kolibri/env
 
 - name: Create a symlink for Kolibri vhost to Nginx-enabled folder
   file:
@@ -27,9 +22,7 @@
     force: yes
 
 - name: Start Kolibri
-  become: yes
-  become_user: ideascube
-  shell: /home/ideascube/.kolibri/env/bin/python2 /home/ideascube/.kolibri/env/bin/kolibri start
+  shell: /root/.kolibri/env/bin/python2 /root/.kolibri/env/bin/kolibri start
 
 - name: Import Kolibri content if we are at BSF
   include: import_content.yml
