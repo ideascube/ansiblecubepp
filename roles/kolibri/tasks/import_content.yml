@@ -1,7 +1,4 @@
 ---
-- name: Install cifs-utils
-  apt: name=cifs-utils state=present
-
 - name: Create a working dir for CIFS share
   file: path=/media/kolibri/ state=directory
 

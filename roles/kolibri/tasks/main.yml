@@ -1,4 +1,10 @@
 ---
+- name: Install few necessary packages for this role
+  apt: name={{ item }} state=present
+  with_items:
+    - cifs-utils
+    - sudo
+
 - name: Create a working dir kolibri
   become: yes
   become_user: ideascube
