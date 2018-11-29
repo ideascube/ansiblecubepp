@@ -2,6 +2,8 @@
 - hosts: localhost
   roles:
     - set_custom_fact
-#    - kiwix
-#    - kolibri
     - package_management
+    - role: kolibri
+      when: ansible_local.device_list[generic_project_name].kolibri is defined
+        and ansible_local.device_list[generic_project_name].kolibri.activated|bool == True
+
