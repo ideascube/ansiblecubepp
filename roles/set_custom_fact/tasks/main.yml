@@ -27,6 +27,11 @@
     src: kiwix.vhost.j2
     dest: /etc/nginx/sites-enabled/kiwix
 
+- name: set nginx vhost for kolibri
+  template:
+    src: kolibri.vhost.j2
+    dest: /etc/nginx/sites-enabled/kolibri
+
 - name: set long domain name in nginx
   lineinfile:
     path: /etc/nginx/nginx.conf
