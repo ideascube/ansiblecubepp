@@ -18,7 +18,7 @@ def update_sqlite(pkgs):
         sql = "UPDATE configuration_configuration set value='{}' where namespace='home-page'".format(json.dumps(new_visible_pkg_list + pkgs))
     except IndexError: # If no entries
         new_visible_pkg_list = []
-        sql = "INSERT INTO configuration_configuration (namespace, key, value, date, actor_id) VALUES ('home-page', 'displayed-package-ids', {}, {}, 1)".format(json.dumps(pkgs), str(datetime.utcnow()))
+        sql = "INSERT INTO configuration_configuration (namespace, key, value, date, actor_id) VALUES ('home-page', 'displayed-package-ids', '{}', '{}', 1)".format(json.dumps(pkgs), str(datetime.utcnow()))
 
     c.execute(sql)
 
