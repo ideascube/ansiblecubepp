@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+
+from datetime import datetime
 import json
 import sys
 import sqlite3
@@ -13,10 +15,11 @@ def update_sqlite(pkgs):
     result = req.fetchall()
     try:
         new_visible_pkg_list = eval(result[0][0])
-    except IndexError:
+        sql = "UPDATE configuration_configuration set value='{}' where namespace='home-page'".format(json.dumps(new_visible_pkg_list + pkgs))
+    except IndexError: # If no entries
         new_visible_pkg_list = []
+        sql = "INSERT INTO configuration_configuration (namespace, key, value, date, actor_id) VALUES ('home-page', 'displayed-package-ids', {}, {}, 1)".format(json.dumps(pkgs), str(datetime.utcnow()))
 
-    sql = "UPDATE configuration_configuration set value='{}' where namespace='home-page'".format(json.dumps(new_visible_pkg_list + pkgs))
     c.execute(sql)
 
     conn.commit()
