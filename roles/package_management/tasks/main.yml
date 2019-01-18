@@ -48,7 +48,6 @@
 
 - name: Try to link kiwix packages without installing.
   block:
-    - file: path=/var/ideascube/kiwix/library.xml state=itouch mode=0644
     - file: path=/var/ideascube/kiwix/data/{{ item }} state=directory mode=0755
       with_items:
         - "content"
