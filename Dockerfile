@@ -1,4 +1,5 @@
 FROM debian:8
+ARG ideascube_version
 
 RUN apt-get update -y && \
     apt-get install software-properties-common -y
@@ -14,6 +15,10 @@ RUN pip install --upgrade setuptools
 RUN pip install ansible==2.5.0
 RUN mkdir -p /etc/ansible/facts.d
 
+# Backup ideascube content
+RUN mv /var/ideascube /var_ideascube
+
+# Set default project name, overwrite in case env var is passed at runtime
 ARG PROJECT_NAME=idb-bsf-vagrant
 ENV PROJECT_NAME="${PROJECT_NAME}"
 
