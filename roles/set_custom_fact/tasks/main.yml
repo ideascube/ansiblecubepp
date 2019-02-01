@@ -1,7 +1,7 @@
 ---
 - name: Get device_list
   get_url:
-    url: https://raw.githubusercontent.com/ideascube/ansiblecube/oneUpdateFile/roles/set_custom_fact/files/device_list.fact
+    url: "{{ device_list[env]['url'] }}"
     dest: /etc/ansible/facts.d/device_list.fact
     mode: 0644
 

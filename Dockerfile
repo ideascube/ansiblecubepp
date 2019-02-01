@@ -24,7 +24,7 @@ RUN apt-get clean -y; \
 # Backup ideascube content
 RUN mv /var/ideascube /var_ideascube
 
-# Set default project name, overwrite in case env var is passed at runtime
+# Set default project name, docker domain name, process_id and environment. Overwrite in case env var is passed at runtime
 ARG PROJECT_NAME=idb-bsf-vagrant
 ENV PROJECT_NAME="${PROJECT_NAME}"
 
@@ -33,6 +33,9 @@ ENV DOCKER_DOMAIN="{DOCKER_DOMAIN}"
 
 ARG PROCESS_ID=azerty
 ENV PROCESS_ID="${PROCESS_ID}"
+
+ARG ENVIRON=PROD
+ENV ENVIRON="${ENVIRON}"
 
 ADD http://filer.bsf-intranet.org/kiwix-serve-AMD64.v2.0 /usr/local/bin/kiwix-serve
 RUN chmod 755 /usr/local/bin/kiwix-serve
