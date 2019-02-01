@@ -1,7 +1,5 @@
 FROM treehouses/kolibri
 
-RUN apt-get update -y && \
-
 # Set default languages to install, overwrite in case env var is passed at runtime
 ARG LANGUAGES=fr
 ENV LANGUAGES="${LANGUAGES}"
@@ -15,6 +13,9 @@ WORKDIR /
 COPY mount_overlay.py /mount_overlay.py
 RUN chmod +x mount_overlay.py
 
+# Creating folders to receive tmpfs
+RUN mkdir -p /tmp/overlay
+
 EXPOSE 8080
 
-ENTRYPOINT ./mount_overlay.py && ./kolibri start
+ENTRYPOINT ./mount_overlay.py $LANGUAGES $MOUNTPOINT && ./kolibri start && tail -f /root/.kolibri/server.log
