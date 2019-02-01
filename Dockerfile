@@ -15,6 +15,12 @@ RUN pip install --upgrade setuptools
 RUN pip install ansible==2.5.0
 RUN mkdir -p /etc/ansible/facts.d
 
+# Clean up
+RUN apt-get clean -y; \
+    rm -fr \
+      /usr/share/doc/* \
+      /var/cache/debconf/*
+
 # Backup ideascube content
 RUN mv /var/ideascube /var_ideascube
 
