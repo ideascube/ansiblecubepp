@@ -20,11 +20,7 @@
   with_items: "{{ catalogs }}"
 
 - name: install non-Kiwix packages
-  shell: "{% if 'present' in item.status %}ideascube catalog install {{ item.name }}
-    {% elif 'latest' in item.status %}ideascube catalog update {{ item.name }}
-    {% elif 'absent' in item.status %}ideascube catalog remove {{ item.name }}
-    {% elif 'reinstall' in item.status %}ideascube catalog reinstall {{ item.name }}
-    {% else %}echo '[+] nothing to do'{% endif %}"
+  shell: ideascube catalog install {{ item.name }}
   when: "{{ item.name not in Kiwix.all }}"
   with_items: '{{ ansible_local.device_list[generic_project_name].package_management | default(omit) }}'
 
