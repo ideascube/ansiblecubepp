@@ -22,6 +22,12 @@ RUN mv /var/ideascube /var_ideascube
 ARG PROJECT_NAME=idb-bsf-vagrant
 ENV PROJECT_NAME="${PROJECT_NAME}"
 
+ARG DOCKER_DOMAIN=docker.ideas-box.eu
+ENV DOCKER_DOMAIN="{DOCKER_DOMAIN}"
+
+ARG PROCESS_ID=azerty
+ENV PROCESS_ID="${PROCESS_ID}"
+
 ADD http://filer.bsf-intranet.org/kiwix-serve-AMD64.v2.0 /usr/local/bin/kiwix-serve
 RUN chmod 755 /usr/local/bin/kiwix-serve
 

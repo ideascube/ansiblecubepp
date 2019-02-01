@@ -3,7 +3,7 @@
 server {
 
     listen 80;
-    server_name kolibri.{{generic_project_name}}.ideascube.docker.ideas-box.eu;
+    server_name kolibri.{{ full_domain_name }};
 
     # Default value, overwritten in nginx.d
     set $kolibri_home /home/ideascube/.kolibri/;

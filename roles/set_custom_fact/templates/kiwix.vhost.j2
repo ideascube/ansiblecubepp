@@ -1,6 +1,6 @@
 server {
     listen  80;
-    server_name kiwix.{{ generic_project_name }}.ideascube.docker.ideas-box.eu;
+    server_name kiwix.{{ full_domain_name }};
     location / {
         proxy_pass_header Server;
         proxy_set_header Host $http_host;
