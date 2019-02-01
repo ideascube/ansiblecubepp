@@ -1,0 +1,20 @@
+FROM treehouses/kolibri
+
+RUN apt-get update -y && \
+
+# Set default languages to install, overwrite in case env var is passed at runtime
+ARG LANGUAGES=fr
+ENV LANGUAGES="${LANGUAGES}"
+
+# Set bind volume mount point
+ARG MOUNTPOINT=/mnt/kolibri
+ENV MOUNTPOINT="${MOUNTPOINT}"
+
+WORKDIR /
+
+COPY mount_overlay.py /mount_overlay.py
+RUN chmod +x mount_overlay.py
+
+EXPOSE 8080
+
+ENTRYPOINT ./mount_overlay.py && ./kolibri start
