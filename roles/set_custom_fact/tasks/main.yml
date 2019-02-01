@@ -1,7 +1,7 @@
 ---
 - name: Get device_list
   get_url:
-    url: "{{ device_list[env]['url'] }}"
+    url: "{{ device_list[environment]['url'] }}"
     dest: /etc/ansible/facts.d/device_list.fact
     mode: 0644
 
