@@ -5,7 +5,7 @@ export KOLIBRI_DOMAIN="$PROJECT_NAME.$PROCESS_ID.ideascube"
 
 mv /var_ideascube/* /var/ideascube/
 
-echo "DOMAIN=$FULLDOMAIN" >> /etc/default/ideascube
+echo "DOMAIN=$DOMAIN" >> /etc/default/ideascube
 
 ideascube migrate --run-syncdb
 
