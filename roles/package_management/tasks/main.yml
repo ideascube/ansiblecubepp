@@ -1,7 +1,7 @@
 ---
 - name: install catalogs
   shell: ideascube catalog remotes add "{{ item.id }}" "{{ item.name }}" "{{ item.url }}"
-  with_items: "{{ catalogs }}"
+  with_items: "{{ catalogs[env] }}"
 
 - name: update ideascube cache
   shell: ideascube catalog cache update
