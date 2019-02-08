@@ -11,13 +11,13 @@
     url: "{{ item.url }}"
     dest: "/tmp/{{ item.id }}.yaml"
     mode: 0644
-  with_items: "{{ catalogs }}"
+  with_items: "{{ catalogs[env] }}"
 
 - name: Load all catalogs as ansible vars
   include_vars:
     file: "/tmp/{{ item.id }}.yaml"
     name: "{{ item.id }}"
-  with_items: "{{ catalogs }}"
+  with_items: "{{ catalogs[env] }}"
 
 - name: install non-Kiwix packages
   shell: ideascube catalog install {{ item.name }}
