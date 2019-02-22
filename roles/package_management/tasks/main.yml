@@ -55,8 +55,8 @@
             f=$(basename $pkg)
             ln -s $pkg /var/ideascube/kiwix/data/content/$f
           done
-        ln -s /mnt/kiwix/index/{{ item }}.idx /var/ideascube/kiwix/data/index/{{ item }}.idx
-        ln -s /mnt/kiwix/library/{{ item }}.xml /var/ideascube/kiwix/data/library/{{ item }}.xml
+        ln -s /mnt/kiwix/index/{{ item }}.zim.idx /var/ideascube/kiwix/data/index/{{ item }}.zim.idx
+        ln -s /mnt/kiwix/library/{{ item }}.zim.xml /var/ideascube/kiwix/data/library/{{ item }}.zim.xml
         kiwix-manage /var/ideascube/kiwix/library.xml add /var/ideascube/kiwix/data/content/{{ item }}.zim
       with_items: "{{ device_kiwix_pkg }}"
       notify: Start kiwix serve
