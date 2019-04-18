@@ -26,3 +26,5 @@ catalogs:
     - id: "osmaps"
       name: "OpenStreetMaps"
       url: "https://raw.githubusercontent.com/bot-TempsModernes/catalog-i-o/master/osmaps.yml"
+
+deployable: True

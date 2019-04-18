@@ -37,6 +37,8 @@ ENV PROCESS_ID="${PROCESS_ID}"
 ARG ENVIRON=PROD
 ENV ENVIRON="${ENVIRON}"
 
+ARG DEPLOYABLE=True
+ENV DEPLOYABLE="${DEPLOYABLE}"
 ADD http://filer.bsf-intranet.org/kiwix-serve-AMD64.v2.0 /usr/local/bin/kiwix-serve
 RUN chmod 755 /usr/local/bin/kiwix-serve
 
