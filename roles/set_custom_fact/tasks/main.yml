@@ -36,7 +36,7 @@
   lineinfile:
     path: /etc/nginx/nginx.conf
     regexp: "# server_names_hash_bucket_size"
-    line: server_names_hash_bucket_size 128;
+    line: server_names_hash_bucket_size 256;
 
 - name: start nginx
   service: 
