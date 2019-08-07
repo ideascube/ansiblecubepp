@@ -4,3 +4,5 @@ device_list:
     url: "https://raw.githubusercontent.com/ideascube/ansiblecube/oneUpdateFile/roles/set_custom_fact/files/device_list.fact"
   DEV:
     url: "https://raw.githubusercontent.com/bot-TempsModernes/ansiblecube/oneUpdateFile/roles/set_custom_fact/files/device_list.fact"
+  QAS:
+    url: "https://raw.githubusercontent.com/ideascube/ansiblecube/oneUpdateFile/roles/set_custom_fact/files/device_list.fact"
