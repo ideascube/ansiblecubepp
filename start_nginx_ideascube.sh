@@ -3,7 +3,8 @@ export IDEASCUBE_ID=idb
 export DOMAIN="$PROJECT_NAME.$PROCESS_ID.ideascube.$DOCKER_DOMAIN"
 export KOLIBRI_DOMAIN="$PROJECT_NAME.$PROCESS_ID.ideascube"
 
-mv /var_ideascube /var/ideascube
+# Here /var/ideascube should exists as it is a docker volume.
+mv /var_ideascube/* /var/ideascube
 
 echo "DOMAIN=$DOMAIN" >> /etc/default/ideascube
 
