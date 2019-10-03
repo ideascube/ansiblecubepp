@@ -1,0 +1,5 @@
+---
+- name: install non-Kiwix packages
+  shell: ideascube catalog install {{ item.name }}
+  when: "{{ item.name not in Kiwix.all }}"
+  with_items: '{{ ansible_local.device_list[generic_project_name].package_management | default(omit) }}'

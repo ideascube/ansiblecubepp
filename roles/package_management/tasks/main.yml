@@ -19,10 +19,17 @@
     name: "{{ item.id }}"
   with_items: "{{ catalogs[env] }}"
 
-- name: install non-Kiwix packages
-  shell: ideascube catalog install {{ item.name }}
-  when: "{{ item.name not in Kiwix.all }}"
-  with_items: '{{ ansible_local.device_list[generic_project_name].package_management | default(omit) }}'
+- name: include tasks for deployable image
+  include_tasks: deployable.yml
+  when: 
+  - deployable is defined
+  - deployable|bool == true
+
+- name: include tasks for non-deployable image
+  include_tasks: non-deployable.yml
+  when:
+  - deployable is defined
+  - deployable|bool == false
 
 - name: Download Kiwix binary
   get_url:
