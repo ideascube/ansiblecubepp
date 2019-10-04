@@ -39,3 +39,8 @@ catalogs:
     - id: "osmaps"
       name: "OpenStreetMaps"
       url: "https://raw.githubusercontent.com/bot-TempsModernes/catalog-i-o/master/osmaps.yml"
+
+API:
+  PROD: "https://tmfront.bsf-intranet.org/goto/temps-modernes/api/project/"
+  QAS: "http://localhost:5000/temps-modernes/api/project/"
+  DEV: "http://localhost:5000/temps-modernes/api/project/"

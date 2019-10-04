@@ -14,6 +14,7 @@ echo "DOMAIN=$DOMAIN"
 echo "KOLIBRI_DOMAIN=$KOLIBRI_DOMAIN"
 echo "PROJECT_NAME=$PROJECT_NAME"
 echo "DEPLOYABLE=$DEPLOYABLE"
+echo "PROJECT_ID"=$PROJECT_ID
 
 ideascube migrate --run-syncdb
 
@@ -24,7 +25,8 @@ ideascube migrate --run-syncdb
                                           full_domain_name=$DOMAIN \
                                           env=$ENVIRON \
                                           kolibri_domain=$KOLIBRI_DOMAIN \
-                                          deployable=$DEPLOYABLE"
+                                          deployable=$DEPLOYABLE \
+                                          project_id=$PROJECT_ID"
 
 ideascube runserver 8000
 

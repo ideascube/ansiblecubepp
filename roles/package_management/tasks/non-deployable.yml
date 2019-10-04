@@ -1,4 +1,12 @@
 ---
-- name: say hello
-  debug: msg="Hello w"
+- name: Gather project content from API
+  uri:
+    url: "{{API[env]}}{{project_id}}"
+    body_format: json
+    register: omeka
+
+- name: print file path
+  debug:
+    msg: {{ item.path }}
+  with_items: {{ omeka.json.content.items }}
 
