@@ -1,2 +1,7 @@
-10.10.9.23 download.kiwix.org
-10.10.9.42 packages.ideascube.org
+---
+hosts:
+  localhost:
+    vars:
+      ansible_connection: local
+      ansible_python_interpreter: "{{ansible_playbook_python}}"
+
