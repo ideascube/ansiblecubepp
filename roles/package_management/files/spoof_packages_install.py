@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/local/bin/python3
 import sqlalchemy as db
 import os.path
 import mimetypes
@@ -134,7 +134,7 @@ class configuration_configuration_model:
 
 
 def get_db_handlers():
-    engine = db.create_engine('sqlite:////home/steven/Git/ansiblecubepp/default.sqlite')
+    engine = db.create_engine('sqlite:////var/ideascube/main/default.sqlite')
     connection = engine.connect()
     metadata = db.MetaData()
     return connection, metadata, engine
