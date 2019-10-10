@@ -15,11 +15,13 @@ echo "KOLIBRI_DOMAIN=$KOLIBRI_DOMAIN"
 echo "PROJECT_NAME=$PROJECT_NAME"
 echo "DEPLOYABLE=$DEPLOYABLE"
 echo "PROJECT_ID"=$PROJECT_ID
+echo "BRANCH"=$BRANCH
 
 ideascube migrate --run-syncdb
 
 /usr/local/bin/ansible-pull -d /var/lib/ansible/local \
                             -i hosts \
+                            -C $BRANCH \
                             -U https://github.com/ideascube/ansiblecubepp.git main.yml \
                             --extra-vars "generic_project_name=$PROJECT_NAME \
                                           full_domain_name=$DOMAIN \
