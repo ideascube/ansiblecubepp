@@ -3,3 +3,11 @@
   shell: ideascube catalog install {{ item.name }}
   when: "{{ item.name not in Kiwix.all }}"
   with_items: '{{ ansible_local.device_list[generic_project_name].package_management | default(omit) }}'
+  register: idc_installation
+
+- name: Write output to logs
+  blockinfile:
+    block: "{{idc_installation}}"
+    path: /var/log/ansible-package-installation.log
+    create: yes
+    backup: yes

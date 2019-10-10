@@ -21,3 +21,19 @@
   with_subelements:
     - "{{ omeka.json.content }}"
     - items
+
+- name: Install apt dependencies
+  apt:
+    name: pip3
+
+- name: Install python dependencies
+  pip:
+    - SQLAlchemy==1.3.8
+    - Unidecode==1.1.1
+    - requests==2.22.0
+  executable: pip3
+
+- name: Update default.sqlite
+  script: spoof_packages_install.py "{{API[env]}}{{project_id}}"
+
+
