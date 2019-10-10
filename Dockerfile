@@ -8,7 +8,7 @@ RUN apt-add-repository 'deb http://repos.ideascube.org/debian/ jessie/'
 
 RUN apt-get update -y && \
     apt-get upgrade -y && \
-    apt-get install python-pip python-dev libssl-dev libffi-dev software-properties-common git -y && \
+    apt-get install python-pip python3-pip python-dev libssl-dev libffi-dev software-properties-common git -y && \
     apt-get install ideascube -y --force-yes
 
 RUN pip install --upgrade setuptools
