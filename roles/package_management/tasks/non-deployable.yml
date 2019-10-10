@@ -3,7 +3,7 @@
   uri:
     url: "{{API[env]}}{{project_id}}"
     body_format: json
-    register: omeka
+  register: omeka
 
 - name: Create media folders
   file:
