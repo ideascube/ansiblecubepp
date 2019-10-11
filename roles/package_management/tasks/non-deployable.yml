@@ -13,7 +13,7 @@
   with_items:
     - "{{ omeka.json.content }}"
 
-- name: create symlinks
+- name: Create symlinks
   file:
     src: "/mnt/alexandrie/{{ item.1['path']}}"
     dest: "/var/ideascube/mediacenter/{{ item.0.slug }}/{{ item.1.path}}"
@@ -21,6 +21,18 @@
   with_subelements:
     - "{{ omeka.json.content }}"
     - items
+
+- name: Create another media folder
+  file:
+    dest: "/var/ideascube/main/media"
+    state: directory
+    mode: '0755'
+
+- name: Create symlinks to this folder
+  file:
+    src: "/var/ideascube/mediacenter"
+    dest: "/var/ideascube/main/media/catalog"
+    state: link
 
 - name: Install python dependencies
   pip:
