@@ -214,13 +214,13 @@ def update_visible_items(pkg_list, metadata, connection, engine):
 
 def update_installed_json(pkg_list):
     r = requests.get('http://catalog.ideascube.org/omeka.yml')
-    catalog = yaml.load(r.text)
+    catalog = yaml.full_load(r.text)
 
     installed_pkg = dict()
     with open('/var/ideascube/main/catalog/installed.json', 'w') as f:
         for pkg in pkg_list:
-            installed_pkg[pkg['slug']] = catalog['all'][pkg['slug']]
-        json.dumps(installed_pkg, f)
+            installed_pkg[pkg] = catalog['all'][pkg]
+        json.dumps(installed_pkg, f, ensure_ascii=False, indent=4)
 
 if __name__ == '__main__':
     if len(sys.argv) == 2:
