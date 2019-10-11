@@ -13,6 +13,7 @@ RUN apt-get update -y && \
 
 RUN pip install --upgrade setuptools
 RUN pip install ansible==2.5.0
+RUN easy_install3 -U pip
 RUN mkdir -p /etc/ansible/facts.d
 
 # Clean up
