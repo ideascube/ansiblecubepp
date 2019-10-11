@@ -220,7 +220,7 @@ def update_installed_json(pkg_list):
     with open('/var/ideascube/main/catalog/installed.json', 'w') as f:
         for pkg in pkg_list:
             installed_pkg[pkg] = catalog['all'][pkg]
-        json.dumps(installed_pkg, f, ensure_ascii=False, indent=4)
+        json.dump(installed_pkg, f, ensure_ascii=False, indent=4)
 
 if __name__ == '__main__':
     if len(sys.argv) == 2:
