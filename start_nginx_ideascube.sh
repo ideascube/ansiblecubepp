@@ -20,8 +20,7 @@ echo "BRANCH"=$BRANCH
 ideascube migrate --run-syncdb
 
 # Setting up ansible clean output for errors.
-echo "[default]
-stdout_callback = debug" > /etc/ansible/ansible.cfg
+export ANSIBLE_STDOUT_CALLBACK=debug
 
 
 /usr/local/bin/ansible-pull \
