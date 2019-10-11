@@ -1,9 +1,11 @@
 #!/usr/local/bin/python3
+import json
 import sqlalchemy as db
 import os.path
 import mimetypes
 import sys
 import requests
+import yaml
 from datetime import datetime
 from unidecode import unidecode
 
@@ -210,6 +212,15 @@ def update_visible_items(pkg_list, metadata, connection, engine):
     )
     connection.execute(query)
 
+def update_installed_json(pkg_list):
+    r = requests.get('http://catalog.ideascube.org/omeka.yml')
+    catalog = yaml.load(r.text)
+
+    installed_pkg = dict()
+    with open('/var/ideascube/main/catalog/installed.json', 'w') as f:
+        for pkg in pkg_list:
+            installed_pkg[pkg['slug']] = catalog['all'][pkg['slug']]
+        json.dumps(installed_pkg, f)
 
 if __name__ == '__main__':
     if len(sys.argv) == 2:
@@ -228,5 +239,5 @@ if __name__ == '__main__':
         for item in pkg['items']:
             insert_items(item, pkg, metadata, connection, engine)
 
-    
+    update_installed_json(pkg_list)
     update_visible_items(pkg_list, metadata, connection, engine)
