@@ -35,7 +35,7 @@
 - name: set long domain name in nginx
   lineinfile:
     path: /etc/nginx/nginx.conf
-    regexp: "# server_names_hash_bucket_size"
+    insertbefore: "# server_names_hash_bucket_size"
     line: server_names_hash_bucket_size 256;
 
 - name: start nginx
